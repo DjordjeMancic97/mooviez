@@ -8,6 +8,7 @@ import {fetchMovies} from "@/services/api";
 import MovieCard from "@/components/MovieCard";
 import {getTrendingMovies} from "@/services/appwrite";
 import TrendingCard from "@/components/TrendingCard";
+import {useMovies} from "@/hooks/useMovies";
 
 const Index = () => {
     const router = useRouter();
@@ -19,11 +20,10 @@ const Index = () => {
     } = useFetch(getTrendingMovies);
 
     const {
-        data: movies,
+        movies,
         loading: moviesLoading,
         error: moviesError
-    } = useFetch(() => fetchMovies({query: ''}), true
-    )
+    } = useMovies()
 
     return (
         <View className="flex-1 bg-primary">
@@ -73,7 +73,7 @@ const Index = () => {
                                         {...item}
                                     />
                                 )}
-                                keyExtractor={(item) => item.id}
+                                keyExtractor={(item) => item.id.toString()}
                                 numColumns={3}
                                 columnWrapperStyle={{
                                     justifyContent: 'flex-start',
